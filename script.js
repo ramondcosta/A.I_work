@@ -1,18 +1,22 @@
-var money = 40;
-var problem = 2.5;
+var money = 70;
+var problem = 120;
 
 function Employee (productivity,salary) {
 	this.productivity = productivity;
 	this.salary = salary;
-	this.contracted = false;
-	this.next = null;
+	//this.contracted = false;
+	//this.next = null;
 }
 function Path(empList) {
 	this.productivity = 0;
 	this.remaining = money;
 	this.average = 0;
 	this.empList = empList;
-	this.stateSet = [0,0,0,0];
+	this.stateSet = new Array(empList.length+1).join('0').split('').map(parseFloat);
+}
+function copyObj(obj) {
+	var copy = JSON.parse(JSON.stringify(obj));
+	return copy;
 }
 
 var employeeList = {
@@ -26,6 +30,7 @@ var employeeList = {
 function recursion(pathsList){
 	
 	if(pathsList[0].productivity >= problem){
+		console.log(pathsList[0].productivity);
 		return pathsList[0].stateSet;
 	}
 	if(pathsList[0].empList.length == 0){
@@ -98,34 +103,111 @@ function fNextState0(path1){
 	emp = path.empList.shift();	
 	return path;
 }
+var empList = []
+var count = 1;
 
-function myFunction() {
-	str = document.getElementById("frm1").name()
-	window.alert(str);
+
+function submitConstruct(empList) {
+	 function interna() {
+        str = document.getElementById("first").value
+		prod = parseInt(str);
+		document.getElementById("first").value = "0";
+
+		str2 = document.getElementById("second").value
+		document.getElementById("second").value = "0";
+		salary = parseInt(str2)
+
+		empList.push(new Employee(prod,salary));
+
+		document.getElementById("employees").innerHTML += '<p>Employee: ' + count++ + '</p>' + '<p>Productivity: ' + prod + '</p>' + '<p>Salary: ' + salary + '</p><p></p>'
+     }
+     return interna;
 }
 
+var myFunction = submitConstruct(empList);
+
+function myFunction2() {
+	str = document.getElementById("first").value
+	prod = parseFloat(str);
+	document.getElementById("first").value = "0";
+
+	str2 = document.getElementById("second").value
+	document.getElementById("second").value = "0";
+	salary = parseFloat(str2)
+
+	empList.push(new Employee(prod,salary));
+
+	document.getElementById("employees").innerHTML += '<p>Productivity: ' + prod + '</p>' + '<p>Salary: ' + salary + '</p><p></p>'
+	//window.alert(parseInt(str) + parseInt(str2));
+}
+
+function execTest1() {
+	money = 70;
+	problem = 120; 
+	empList.push(new Employee(20,20));	
+	empList.push(new Employee(50,32));	
+	empList.push(new Employee(20,20));	
+	empList.push(new Employee(200,80));	
+	empList.push(new Employee(50,15));	
+	empList.push(new Employee(10,10));	
+	empList.push(new Employee(30,30));	
+	runFunction();
+}
+function execTest2() {
+	money = 40;
+	problem = 25; 
+	empList.push(new Employee(12,20));
+	empList.push(new Employee(20,30));
+	empList.push(new Employee(8,10));
+	empList.push(new Employee(15,20));
+	runFunction();
+}
+
+function runConstructor(){
+	function interna() {
+		var orig_pathsList = new Path(empList);
+		console.log(JSON.stringify(orig_pathsList));
+		//var pathsList = JSON.parse(JSON.stringify(orig_pathsList));
+		var path = copyObj(orig_pathsList);
+		var pathsList = [];
+		pathsList[0] = path;
+		//console.log(recursion(pathsList))
+		states = recursion(pathsList);
+		console.log(states);
+
+		var printar = "<p>Programers: ";
+		function printEmployee(item,index){
+			if(item == true){
+				if(index != (states.length-1))
+					printar += (index+1) + ',';
+				else printar += "and " + (index+1) + " ";
+			}
+		}
+		states.forEach(printEmployee);
+		printar += "were hired</p>"
+		document.getElementById("employees").innerHTML = printar;
+		//document.getElementById("employees").innerHTML = JSON.stringify(recursion(pathsList));
+
+		// Reset stuffs
+		empList = [];
+		count = 1;
+	}
+	return interna;
+}
+
+var runFunction = runConstructor();
 function node(value) {
 	this.value = value;
 }
 
-var empList = [];
+/*var empList = [];
 empList.push(new Employee(1.2,20));
 empList.push(new Employee(2.0,30));
 empList.push(new Employee(0.8,10));
-empList.push(new Employee(1.5,20));
+empList.push(new Employee(1.5,20));*/
 
-function copyObj(obj) {
-	var copy = JSON.parse(JSON.stringify(obj));
-	return copy;
-}
 
-var orig_pathsList = new Path(empList);
-//var pathsList = JSON.parse(JSON.stringify(orig_pathsList));
-var path = copyObj(orig_pathsList);
-var pathsList = [];
-pathsList[0] = path;
-
-path0 = fNextState0(pathsList[0]);
+/*path0 = fNextState0(pathsList[0]);
 path1 = fNextState1(pathsList[0]);
 x = path0;
-console.log(recursion(pathsList))
+console.log(recursion(pathsList))*/

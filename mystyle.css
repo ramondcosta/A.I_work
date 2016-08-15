@@ -1,0 +1,32 @@
+div {
+	float: left;
+}
+#employees {
+	font-size: 10px;
+	float: bottom;
+	clear: left;
+}
+.test {
+
+
+}
+.formcol {
+    float: left;
+    padding: 2px;
+}
+
+.formcol label {
+    font-weight: bold;
+    display:block;
+}
+
+.middle > label {
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    color: black;
+}
+[value="Submit"] {
+	float: left;
+}
+
