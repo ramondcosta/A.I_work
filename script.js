@@ -179,7 +179,7 @@ function runConstructor(){
 		function printEmployee(item,index){
 			if(item == true){
 				if(index != (states.length-1))
-					printar += (index+1) + ',';
+					printar += (index+1) + ", ";
 				else printar += "and " + (index+1) + " ";
 			}
 		}
@@ -199,15 +199,3 @@ var runFunction = runConstructor();
 function node(value) {
 	this.value = value;
 }
-
-/*var empList = [];
-empList.push(new Employee(1.2,20));
-empList.push(new Employee(2.0,30));
-empList.push(new Employee(0.8,10));
-empList.push(new Employee(1.5,20));*/
-
-
-/*path0 = fNextState0(pathsList[0]);
-path1 = fNextState1(pathsList[0]);
-x = path0;
-console.log(recursion(pathsList))*/
