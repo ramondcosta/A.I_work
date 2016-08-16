@@ -1,12 +1,14 @@
 var money = 70;
 var problem = 120;
 
+//Employee object
 function Employee (productivity,salary) {
 	this.productivity = productivity;
 	this.salary = salary;
 	//this.contracted = false;
 	//this.next = null;
 }
+//Path object
 function Path(empList) {
 	this.productivity = 0;
 	this.remaining = money;
@@ -25,10 +27,10 @@ var employeeList = {
 	contracted : false,
 	next : null,
 }
-//function recursion(pathsList,empList,remaining,productivity){
 // Recursions works on the first path in the list
 function recursion(pathsList){
 	
+	//Se a productividade da lista atual é solução então problema está resolvido o estado
 	if(pathsList[0].productivity >= problem){
 		console.log(pathsList[0].productivity);
 		return pathsList[0].stateSet;
@@ -37,13 +39,17 @@ function recursion(pathsList){
 		pathsList.shift();
 		return recursion(pathsList);
 	}
+
+	//Dois caminhos contrata funcionário ou não
 	path1 = fNextState1(pathsList[0]);
 	path0 = fNextState0(pathsList[0]);
 
 	pathsList.shift();
 	//push the news paths
+	//Os novos caminhos são inseridos de forma ordenada
 	sortPush(path0,pathsList);
 	if(path1 != "error"){
+		//Só adiciona o caminho se ele for válido(Não exceder os recursos do projeto)
 		sortPush(path1,pathsList);
 	}
 	return recursion(pathsList);
@@ -62,7 +68,8 @@ function sortPush(path,pathsList){
 function calcAverage(path){
 	path;
 }
-/*PATH ZERO!!*/
+
+//The nextState functions update the path
 function nextState1(path){
 	//path = path1;
 	path.stateSet[path.stateSet.length - path.empList.length] = 1;
@@ -78,12 +85,9 @@ function nextState1(path){
 //functional nextState1
 var x;
 function fNextState1(path1){
-
 	path = JSON.parse(JSON.stringify(path1));
 	path.stateSet[path.stateSet.length - path.empList.length] = 1;
-	//path = JSON.parse(JSON.stringify(path1));
-	//path = path1;
-	x = path
+
 	//console.log(path);
 	if((path.remaining - path.empList[0].salary) < 0)
 		return "error"
@@ -98,6 +102,7 @@ function nextState0(path){
 	emp = path.empList.shift();	
 	return path;
 }
+//functional nextState1
 function fNextState0(path1){
 	path = JSON.parse(JSON.stringify(path1));
 	emp = path.empList.shift();	
@@ -141,7 +146,18 @@ function myFunction2() {
 	//window.alert(parseInt(str) + parseInt(str2));
 }
 
+//Run test1
 function execTest1() {
+	money = 40;
+	problem = 25; 
+	empList.push(new Employee(12,20));
+	empList.push(new Employee(20,30));
+	empList.push(new Employee(8,10));
+	empList.push(new Employee(15,20));
+	runFunction();
+}
+//Run test2
+function execTest2() {
 	money = 70;
 	problem = 120; 
 	empList.push(new Employee(20,20));	
@@ -153,16 +169,9 @@ function execTest1() {
 	empList.push(new Employee(30,30));	
 	runFunction();
 }
-function execTest2() {
-	money = 40;
-	problem = 25; 
-	empList.push(new Employee(12,20));
-	empList.push(new Employee(20,30));
-	empList.push(new Employee(8,10));
-	empList.push(new Employee(15,20));
-	runFunction();
-}
 
+
+//Essa é a parte do código que inicia o algoritmo a maior parte é declaração, e html 
 function runConstructor(){
 	function interna() {
 		var orig_pathsList = new Path(empList);
